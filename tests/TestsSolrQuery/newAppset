@@ -1,0 +1,4 @@
+output/TestSolrQuerySimple/application.TestSolrQuerySimple.adl -P solrServer=http://g0601b02:8984/solr -P solrCollection=techproducts
+output/TestCollectionAsAttribute/application.TestCollectionAsAttribute.adl -P solrServer=http://g0601b02:8984/solr -P solrCollection=techproducts
+output/TestPassingForwardAttributes/application.TestPassingForwardAttributes.adl -P solrServer=http://g0601b02:8984/solr -P solrCollection=techproducts
+output/TestQueryError/application.TestQueryError.adl -P solrServer=http://g0601b02:8984/solr -P solrCollection=techproducts

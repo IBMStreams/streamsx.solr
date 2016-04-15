@@ -1,0 +1,41 @@
+namespace application ;
+
+use com.ibm.streamsx.solr::SolrQuery ;
+
+composite SolrQuerySample
+{
+	param
+		expression<rstring> $solrServer : getSubmissionTimeValue("solrServer","http://localhost:8983/solr" );
+		expression<rstring> $solrCollection : getSubmissionTimeValue("solrCollection","techproducts" );
+	graph
+		stream<rstring solr_query> QueryBeacon = Beacon()
+		{
+			param
+				period : 3.0 ;
+				iterations : 10;
+			output
+				QueryBeacon : solr_query = "q=*:*&sort=id%20asc&fq=cat:electronics&fl=id,cat,name" ;
+		}
+		
+		//URL to do same query: http://localhost:8983/solr/techproducts/select/?q=*:*&sort=id%20asc&fq=cat:electronics&fl=id,cat,name&rows=5
+		stream<rstring solr_response> SolrQueryResponse =
+			SolrQuery(QueryBeacon)
+		{
+			param 
+				solrURL : $solrServer;
+				collection : $solrCollection;
+				numberOfRows : 5; 
+				responseFormat : "json";
+				omitHeader : true;
+				
+		}
+
+		() as Custom_3 = Custom(SolrQueryResponse)
+		{
+			logic onTuple SolrQueryResponse : {
+				printStringLn(solr_response);
+			}
+		}
+
+}
+
