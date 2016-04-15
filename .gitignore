@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!spldoc/
+!index.html
+!README.md
+!javascripts/
+!stylesheets/
