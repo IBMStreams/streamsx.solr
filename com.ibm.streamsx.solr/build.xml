@@ -98,7 +98,7 @@
 	</target>
 
 	<target name="jar" depends="compile">
-	<jar destfile="${impl.lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streams/solr/**" filesonly="true" >
+	<jar destfile="${impl.lib.dir}/${jarfile}" basedir="${build.dir}" includes="com/ibm/streamsx/solr/**" filesonly="true" >
 		</jar>
 		<delete dir="${build.dir}" />		
 	</target>
