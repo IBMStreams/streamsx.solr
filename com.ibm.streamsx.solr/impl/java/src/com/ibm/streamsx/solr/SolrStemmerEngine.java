@@ -27,10 +27,13 @@ public class SolrStemmerEngine {
 	private LowerCaseFilterFactory lowerCaseFilterFactory;
 	private String stemmerType;
 
-	public SolrStemmerEngine(String incomingStemmerType, String luceneMatchVersion, String language,
+	public SolrStemmerEngine(String stemmerType, String luceneMatchVersion, String language,
 			String synonymFile, String stopWordFile, Boolean ignoreCase,
 			Boolean expand) throws Exception {
-		stemmerType = incomingStemmerType;
+
+		
+		
+		this.stemmerType = stemmerType;
 		Map<String, String> tokenizerArgs = new HashMap<String, String>();
 		tokenizerArgs.put("luceneMatchVersion", luceneMatchVersion);
 		
@@ -65,7 +68,7 @@ public class SolrStemmerEngine {
 					snowballPorterFactorArgs);
 			snowballPorterFactory.inform(new ClasspathResourceLoader(this.getClass()));
 		} else {
-			throw new Exception("Stemmer type not valid!");
+			throw new Exception("Stemmer type not valid! Should either be kstem or snowball.");
 		}
 		// synonyms filter factory
 		filterFactoryArgs.put("expand", expand.toString());
@@ -89,7 +92,7 @@ public class SolrStemmerEngine {
 		} else if (stemmerType.equalsIgnoreCase("snowball")){
 			stemmerTokenStream = snowballPorterFactory.create(stopTokenStream);
 		} else {
-			throw new Exception("Stemmer type not valid!");
+			throw new Exception("Stemmer type not valid. Should be either kStem or Snowball.");
 		}
 		
 		TokenStream synonymTokenStream = synonymFilterFactory.create(stemmerTokenStream);

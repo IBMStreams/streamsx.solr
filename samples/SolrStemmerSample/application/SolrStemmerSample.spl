@@ -18,10 +18,8 @@ composite SolrStemmerSample
 		{
 			param 
 				language : "english";
-				stopWordFile : getThisToolkitDir() + "/etc/stopwords.txt";
-				synonymFile :  getThisToolkitDir() + "/etc/synonyms.txt";
-				//vmArg : "-cp /homes/hny5/cooka/gitSolr/streamsx.solr/com.ibm.streamsx.solr/opt/downloaded/";
-				
+				stopWordFile : "/stopwords.txt"; 
+				synonymFile :  "/synonyms.txt";				
 		}
 
 		() as Custom_3 = Custom(SolrQuery_2_out0)

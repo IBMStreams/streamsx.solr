@@ -47,7 +47,7 @@ import com.ibm.streams.operator.model.SharedLoader;
 description="Java Operator SolrStemmer")
 @InputPorts({@InputPortSet(description="Port that ingests tuples", cardinality=1, optional=false, windowingMode=WindowMode.NonWindowed, windowPunctuationInputMode=WindowPunctuationInputMode.Oblivious), @InputPortSet(description="Optional input ports", optional=true, windowingMode=WindowMode.NonWindowed, windowPunctuationInputMode=WindowPunctuationInputMode.Oblivious)})
 @OutputPorts({@OutputPortSet(description="Port that produces tuples", cardinality=1, optional=false, windowPunctuationOutputMode=WindowPunctuationOutputMode.Generating), @OutputPortSet(description="Optional output ports", optional=true, windowPunctuationOutputMode=WindowPunctuationOutputMode.Generating)})
-@Libraries(value = {"opt/downloaded/*", "@STREAMSX_SOLR@"})
+@Libraries(value = {"opt/downloaded/*", "@STREAMSX_STEMMER@"})
 @SharedLoader
 public class SolrStemmer extends AbstractOperator {
 	private String luceneMatchVersion = "LUCENE_51";
@@ -84,6 +84,7 @@ public class SolrStemmer extends AbstractOperator {
      */
     @Override
     public synchronized void allPortsReady() throws Exception {
+
         OperatorContext context = getOperatorContext();
         Logger.getLogger(this.getClass()).trace("Operator " + context.getName() + " all ports are ready in PE: " + context.getPE().getPEId() + " in Job: " + context.getPE().getJobId() );
     }
@@ -100,7 +101,9 @@ public class SolrStemmer extends AbstractOperator {
     @Override
     public final void process(StreamingInput<Tuple> inputStream, Tuple tuple)
             throws Exception {
-
+    	
+    	
+    	
     	// Create a new tuple for output port 0
         StreamingOutput<OutputTuple> outStream = getOutput(0);
         OutputTuple outTuple = outStream.newTuple();
@@ -148,7 +151,7 @@ public class SolrStemmer extends AbstractOperator {
     	stopWordFile = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "Stemmer type to be used. Default value is kStem. Stemmer type must either be kStem or Snowball.")
     public void setStemmerType(String value){
     	stemmerType = value;
     }
