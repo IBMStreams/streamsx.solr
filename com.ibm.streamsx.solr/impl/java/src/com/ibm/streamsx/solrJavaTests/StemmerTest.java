@@ -13,7 +13,7 @@ public class StemmerTest {
 	private static String synonymFile = "synonyms.txt";
 	private static String stopWordFile = "stopwords.txt";
 	private static Boolean ignoreCase = true;
-	private static Boolean expand = false;
+	private static Boolean expand = false; 
 	private static String stemmerType = "snowball";
 	/**
 	 * @param args
@@ -24,7 +24,7 @@ public class StemmerTest {
 
         URL[] urls = ((URLClassLoader)cl).getURLs();
 
-        for(URL url: urls){
+        for(URL url: urls){  
         	System.out.println(url.getFile());
         }
 		System.out.println("Working Directory = " +
