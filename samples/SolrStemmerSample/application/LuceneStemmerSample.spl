@@ -1,0 +1,37 @@
+namespace application ;
+
+use com.ibm.streamsx.solr::LuceneStemmer ;
+
+composite LuceneStemmerSample
+{
+	graph
+		(stream<rstring wordsToStem> Beacon_1_out0) as Beacon_1 = Beacon()
+		{
+			param
+				period : 3.0 ;
+			output
+				Beacon_1_out0 : wordsToStem = "Hi, I am having trouble with my new TV." ; 
+		}
+		
+		/*
+		 * Set the STREAMSX_STEMMER environment variable to the directory containing etc/
+		 */
+		stream<rstring stemmedWords> StemmedWords =
+			LuceneStemmer(Beacon_1_out0)
+		{
+			param 
+				language : "english";
+				performStopWordFiltering : true; 
+				stopWordFile : "/etc/stopwords.txt"; 
+				synonymFile :  "/etc/synonyms.txt";				
+		}
+
+		() as Custom_3 = Custom(StemmedWords)
+		{
+			logic onTuple StemmedWords : {
+				printStringLn(stemmedWords);
+			}
+		}
+
+}
+

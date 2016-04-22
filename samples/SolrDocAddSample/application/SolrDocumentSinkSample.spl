@@ -4,7 +4,7 @@ use com.ibm.streamsx.solr::SolrDocumentSink ;
 
 /*
  * To use this sample, you can start Solr with the default Solr example (5.3.1) 
- * 		bin/solr start -p 8984 -s "example/techproducts/solr"
+ * 		bin/solr start -p 8983 -e techproducts
  * This will create a collection called techproducts. 
  */
 composite SolrDocumentSinkSample

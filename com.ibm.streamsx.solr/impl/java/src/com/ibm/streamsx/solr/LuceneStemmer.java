@@ -43,25 +43,27 @@ import com.ibm.streams.operator.model.SharedLoader;
  * <p>With the exception of operator initialization, all the other events may occur concurrently with each other, 
  * which lead to these methods being called concurrently by different threads.</p> 
  */
-@PrimitiveOperator(name="SolrStemmer", namespace="com.ibm.streamsx.solr",
-description="Java Operator SolrStemmer")
+@PrimitiveOperator(name="LuceneStemmer", namespace="com.ibm.streamsx.solr",
+description="Java Operator LuceneStemmer")
 @InputPorts({@InputPortSet(description="Port that ingests tuples", cardinality=1, optional=false, windowingMode=WindowMode.NonWindowed, windowPunctuationInputMode=WindowPunctuationInputMode.Oblivious), @InputPortSet(description="Optional input ports", optional=true, windowingMode=WindowMode.NonWindowed, windowPunctuationInputMode=WindowPunctuationInputMode.Oblivious)})
 @OutputPorts({@OutputPortSet(description="Port that produces tuples", cardinality=1, optional=false, windowPunctuationOutputMode=WindowPunctuationOutputMode.Generating), @OutputPortSet(description="Optional output ports", optional=true, windowPunctuationOutputMode=WindowPunctuationOutputMode.Generating)})
 @Libraries(value = {"opt/downloaded/*", "@STREAMSX_STEMMER@"})
 @SharedLoader
-public class SolrStemmer extends AbstractOperator {
+public class LuceneStemmer extends AbstractOperator {
 	private String luceneMatchVersion = "LUCENE_51";
 	private String language = "English";
-	private String synonymFile = "synonyms.txt";
-	private String stopWordFile = "stopwords.txt";
+	private String synonymFile;
+	private String stopWordFile;
 	private Boolean ignoreCase = true;
 	private Boolean expand = false;
 	private String stemmerType = "kStem";
+	private Boolean performStopWordFiltering = false;
 	
-	private SolrStemmerEngine stemmerEngine;
+	private LuceneStemmerEngine stemmerEngine;
 	
-	private final Logger trace = Logger.getLogger(SolrStemmer.class
+	private final Logger trace = Logger.getLogger(LuceneStemmer.class
 			.getCanonicalName());
+	
 	
 	
     /**
@@ -74,7 +76,7 @@ public class SolrStemmer extends AbstractOperator {
 			throws Exception {
 		super.initialize(context);
         Logger.getLogger(this.getClass()).trace("Operator " + context.getName() + " initializing in PE: " + context.getPE().getPEId() + " in Job: " + context.getPE().getJobId() );
-        stemmerEngine = new SolrStemmerEngine(stemmerType, luceneMatchVersion, language, synonymFile, stopWordFile, ignoreCase, expand);
+        stemmerEngine = new LuceneStemmerEngine(stemmerType, luceneMatchVersion, language, synonymFile, stopWordFile, performStopWordFiltering, ignoreCase, expand);
 	}
 
     /**
@@ -136,19 +138,24 @@ public class SolrStemmer extends AbstractOperator {
     	luceneMatchVersion = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "Language. Default: english")
     public void setLanguage(String value){
     	language = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "Location of synonym file relative to STREAMSX_STEMMER environment variable. Example: /etc/synonyms.txt")
     public void setSynonymFile(String value){
     	synonymFile = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "If left blank while performStopWordFiltering is true, default English stop words will be used (see https://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters#solr.StopFilterFactory). Location of stopword file relative to STREAMSX_STEMMER environment variable. Example: /etc/stopwords.txt")
     public void setStopWordFile(String value){
     	stopWordFile = value;
+    }
+    
+    @Parameter(optional = true, description = "Whether or not to perform filtering of stop words. Default to false.")
+    public void setPerformStopWordFiltering(Boolean value){
+    	performStopWordFiltering = value;
     }
     
     @Parameter(optional = true, description = "Stemmer type to be used. Default value is kStem. Stemmer type must either be kStem or Snowball.")
@@ -156,12 +163,12 @@ public class SolrStemmer extends AbstractOperator {
     	stemmerType = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "If true, ignore case when filtering stop words. Default to true.")
     public void setIgnoreCase(boolean value){
     	ignoreCase = value;
     }
     
-    @Parameter(optional = true)
+    @Parameter(optional = true, description = "If expand is true, a synonym will be expanded to all equivalent synonyms. If it is false, all equivalent synonyms will be reduced to the first in the list.")
     public void setExpand(boolean value){
     	expand = value;
     }
