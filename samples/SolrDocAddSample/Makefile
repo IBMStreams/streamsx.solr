@@ -9,7 +9,7 @@ SPLC_FLAGS ?= -a -t ${STREAMS_SOLR_TOOLKIT}
 SPLC = $(STREAMS_INSTALL)/bin/sc
 
 SPL_CMD_ARGS ?=
-SPL_MAIN_COMPOSITE = application::SolrDocAddSample
+SPL_MAIN_COMPOSITE = application::SolrDocumentSinkSample
 OUTPUT_DIR = output
 
 all: distributed

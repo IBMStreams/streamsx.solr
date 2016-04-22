@@ -2,8 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>SPL Build Options for Project</comment>
-<entry key="com.ibm.streams.studio.splproject:ENVVAR_NAME_2">STREAMSX_STEMMER</entry>
-<entry key="com.ibm.streams.studio.splproject:ENVVAR_NAME_1">STREAMSX_SOLR</entry>
+<entry key="com.ibm.streams.studio.splproject:ENVVAR_NAME_1">STREAMSX_STEMMER</entry>
 <entry key="com.ibm.streams.studio.splproject:EXT_CLEAN_BUILD_CMD">make clean</entry>
 <entry key="com.ibm.streams.studio.splproject:EXT_FULL_BUILD_CMD">make all</entry>
 <entry key="com.ibm.streams.studio.splproject:REPLACE_ENVIRONMENT">T</entry>
@@ -11,8 +10,7 @@
 <entry key="com.ibm.streams.studio.splproject:BUILDER_TYPE">0</entry>
 <entry key="com.ibm.streams.studio.splproject:DERIVED_OUTPUT_DIR">T</entry>
 <entry key="com.ibm.streams.studio.splproject:EXT_INCR_BUILD_CMD">make</entry>
-<entry key="com.ibm.streams.studio.splproject:ENVVAR_VALUE_2">/home/streamsadmin/test/</entry>
-<entry key="com.ibm.streams.studio.splproject:ENVVAR_VALUE_1">/home/streamsadmin/git/streamsx.solr-1/samples/SolrStemmerSample</entry>
+<entry key="com.ibm.streams.studio.splproject:ENVVAR_VALUE_1">/home/streamsadmin/git/streamsx.solr-1/samples/SolrStemmerSample/</entry>
 <entry key="com.ibm.streams.studio.splproject:DATA_DIR">data</entry>
 <entry key="com.ibm.streams.studio.splproject:EXT_BUILD_OUTPUT">T</entry>
 </properties>
