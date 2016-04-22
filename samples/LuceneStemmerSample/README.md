@@ -1,4 +1,4 @@
-# SolrStemmer Sample
+# LuceneStemmer Sample
 
 ## Running this sample:
  
