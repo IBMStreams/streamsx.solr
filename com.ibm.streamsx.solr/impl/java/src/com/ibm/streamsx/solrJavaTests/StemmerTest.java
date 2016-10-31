@@ -29,7 +29,7 @@ public class StemmerTest {
         }
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
-		solrStemmerEngine = new LuceneStemmerEngine(stemmerType, luceneMatchVersion, language, synonymFile, stopWordFile, ignoreCase, expand);
+		solrStemmerEngine = new LuceneStemmerEngine(stemmerType, luceneMatchVersion, language, synonymFile, stopWordFile, ignoreCase, expand, true);
 		String fullWords = "apples, bananas, hearing coding loving killing making be walked talked sorted love glove" ;  
 		String stemmedTokens = solrStemmerEngine.getStems(fullWords);
 		System.out.println(stemmedTokens);
